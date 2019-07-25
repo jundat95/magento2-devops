@@ -1,0 +1,49 @@
+version: '3'
+services:
+  application:
+    build: 
+      dockerfile: 'Dockerfile'
+      context: './bin/application/'
+    container_name: 'application'
+    volumes: 
+      # - './bin/application/etc/nginx/magento.conf:/etc/nginx/conf.d/magento.conf'
+      - appdata:/var/www/html:delegated
+    ports: 
+      - '80:80'
+      - '61208:61208'
+    restart: always
+    depends_on:
+      - mysqldb
+    networks:
+      - app-network
+  mysqldb:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    env_file: ./bin/env/db.env
+    ports: 
+      - '3306:3306'
+    volumes:
+      - 'mysql_data:/var/lib/mysql'
+    networks:
+      - app-network
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports: 
+      - '8080:80'
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysqldb
+    depends_on: 
+      - mysqldb
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
+volumes:
+  appdata:
+  mysql_data:
+    driver: local
