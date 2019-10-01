@@ -1,0 +1,5 @@
+#!bin/bash
+sh ./bin/bash/command find /var/www/html -type d -exec chmod 777 {} \;
+sh ./bin/bash/command find /var/www/html -type f -exec chmod 777 {} \;
+sh ./bin/bash/command chmod u+x /var/www/html/bin/magento
+echo "Update permission is successfuly." 

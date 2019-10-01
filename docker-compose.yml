@@ -6,7 +6,6 @@ services:
       context: './bin/application/'
     container_name: 'application'
     volumes: 
-      # - './bin/application/etc/nginx/magento.conf:/etc/nginx/conf.d/magento.conf'
       - appdata:/var/www/html:delegated
     ports: 
       - '80:80'

@@ -1,0 +1,3 @@
+#!bin/bash
+sh ./bin/bash/command chown -R magento:magento /var/www/html/
+echo "Update own is successfuly." 

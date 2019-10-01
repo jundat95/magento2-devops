@@ -1,0 +1,9 @@
+#!bin/bash
+[ -z "$1" ] && echo "You must enter specify folder.(ex: --all, vendor)" && exit
+if [ "$1" = "--all" ]; then
+    docker cp www/./ $(docker-compose ps -q application):/var/www/html
+    echo "Copy all file is completed."
+else
+    docker cp www/$1 $(docker-compose ps -q application):/var/www/html
+    echo "Copy folder $1/* is completed."
+fi
