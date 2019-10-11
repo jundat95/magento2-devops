@@ -9,7 +9,7 @@ RUN apt-get update \
     && apt-get install -y vim \
     && apt-get install -y htop 
 
-RUN useradd -ms /bin/bash magento
+RUN useradd -ms /bin/bash magento && adduser www-data magento
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
