@@ -28,14 +28,6 @@ services:
     networks: 
       - app-network
     tty: true
-  # fpm7.2: 
-  #   image: php:7.2-fpm-stretch
-  #   ports: 
-  #     - 9001:9001
-  #   networks: 
-  #     - app-network
-  #   volumes: 
-  #     - /var/www/html
   db:
     image: mysql:5.7
     container_name: db
@@ -47,19 +39,19 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - app-network
-  # phpmyadmin:
-  #   image: phpmyadmin/phpmyadmin
-  #   container_name: phpmyadmin
-  #   restart: always
-  #   ports: 
-  #     - '8080:80'
-  #   environment:
-  #     - PMA_ARBITRARY=1
-  #     - PMA_HOST=db
-  #   depends_on: 
-  #     - db
-  #   networks:
-  #     - app-network
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports: 
+      - '8080:80'
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=db
+    depends_on: 
+      - db
+    networks:
+      - app-network
 networks:
   app-network:
     driver: bridge
