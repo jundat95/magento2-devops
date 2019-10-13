@@ -1,7 +1,7 @@
 #!bin/bash
-docker cp ./bin/application/etc/nginx/magento.conf $(docker-compose ps -q application):/etc/nginx/conf.d/magento.conf
-docker cp ./bin/application/etc/php/www.conf $(docker-compose ps -q application):/etc/php/7.2/fpm/pool.d/www.conf
+docker cp ./bin/app/etc/nginx/magento.conf $(docker-compose ps -q app):/etc/nginx/conf.d/magento.conf
+docker cp ./bin/php/7.2/etc/www.conf $(docker-compose ps -q fpm):/etc/php7/php-fpm.d/www.conf
 echo "Copy configuration is successfuly."
-sh ./bin/bash/command service nginx restart
-sh ./bin/bash/command service php7.2-fpm restart
+sh ./bin/bash/appcli service nginx restart
+sh ./bin/bash/fpmcli service php-fpm restart
 echo "Reload configuration is successfuly."
