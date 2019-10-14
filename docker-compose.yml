@@ -20,8 +20,8 @@ services:
   fpm: 
     build: 
       dockerfile: 'Dockerfile'
-      context: './bin/php/7.2/'
-    container_name: 'php7.2'
+      context: './bin/php/7.3/'
+    container_name: 'php7.3'
     volumes: *appvolumes
     ports: 
       - 9000:9000
