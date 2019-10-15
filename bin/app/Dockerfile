@@ -9,8 +9,6 @@ RUN apt-get update \
 
 RUN useradd -ms /bin/bash magento && adduser www-data magento
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
 # COPY etc/nginx/magento.conf /etc/nginx/conf.d
 
 WORKDIR /var/www/html

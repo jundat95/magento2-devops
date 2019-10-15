@@ -14,14 +14,14 @@ services:
     restart: always
     depends_on:
       - db
-      - fpm
+      - phpfpm
     networks:
       - app-network
-  fpm: 
+  phpfpm: 
     build: 
       dockerfile: 'Dockerfile'
-      context: './bin/php/7.3/'
-    container_name: 'php7.3'
+      context: './bin/php/7.3-alpine/'
+    container_name: 'phpfpm'
     volumes: *appvolumes
     ports: 
       - 9000:9000
