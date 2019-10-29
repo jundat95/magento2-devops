@@ -1,6 +1,7 @@
 FROM ubuntu:18.04
 
-LABEL MAINTAINER="Jundat95"
+LABEL Maintainer="Jundat95" \
+      Description="Nginx based on Ubuntu minimal 18.04"
 
 RUN apt-get update \
     && apt-get install -y nginx \
@@ -9,7 +10,9 @@ RUN apt-get update \
 
 RUN useradd -ms /bin/bash magento && adduser www-data magento
 
-# COPY etc/nginx/magento.conf /etc/nginx/conf.d
+COPY etc/domain /usr/local/bin/
+
+RUN chmod 775 /usr/local/bin/domain
 
 WORKDIR /var/www/html
 

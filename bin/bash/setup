@@ -1,4 +1,5 @@
-#!bin/bash
+#!/bin/bash
+
 echo "Starting setup magento"
 sh ./bin/bash/fpmcli bin/magento setup:install \
   --db-host=db \

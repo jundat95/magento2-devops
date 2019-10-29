@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 [ -z "$1" ] && echo "You must enter specify folder.(ex --all, app/code)" && exit
 if [ "$1" = "--all" ]; then
     docker cp $(docker-compose ps -q app):/var/www/html/./ www

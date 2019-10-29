@@ -1,5 +1,5 @@
 #!bin/bash
-docker cp ./bin/app/etc/nginx/magento.conf $(docker-compose ps -q app):/etc/nginx/conf.d/magento.conf
+docker cp ./bin/app/etc/magento.conf $(docker-compose ps -q app):/etc/nginx/conf.d/magento.conf
 # docker cp ./bin/php/7.2/etc/www.conf $(docker-compose ps -q phpfpm):/etc/php7/php-fpm.d/www.conf
 echo "Copy configuration is successfuly."
 sh ./bin/bash/appcli service nginx restart

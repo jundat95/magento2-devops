@@ -1,0 +1,44 @@
+#!/bin/bash
+
+if [ "$1" != "" ]; then
+        echo "Set domain to $1"
+else 
+        echo "Set domain to http://magento.local/"
+fi
+
+# Const
+domain=${1:-magento.local}
+root="/var/www/html"
+block="/etc/nginx/sites-available/$domain"
+
+# Create the Document Root directory
+# sudo mkdir -p $root
+
+# Assign ownership to your regular user account
+# sudo chown -R $USER:$USER $root
+
+# Create the Nginx server block file:
+tee $block > /dev/null <<EOF 
+upstream fastcgi_backend {
+        server  unix:/sock/docker.sock;
+}
+
+server {
+        listen                  80;
+        server_name             $domain www.$domain;
+        set \$MAGE_ROOT         $root;
+        set \$MAGE_MODE         developer;
+        include                 $root/nginx.conf.sample;
+}
+
+
+EOF
+
+# Link to make it available
+ln -s $block /etc/nginx/sites-enabled/
+
+# add domain to hosts
+echo "127.0.0.1 $domain" >> /etc/hosts
+
+# update domain
+service nginx reload

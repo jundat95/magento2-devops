@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# Define configuration
+
+BASE_URL="http://magento.local/"
+
+DB_NAME="magento"
+DB_USER="magento"
+DB_PW="123456"
+
+ADMIN_USER="admin"
+ADMIN_PW="admin@123"
+
+
+echo "======================================="
+echo "==========Welcome Magento Tool========="
+echo "======================================="
+
+echo "======================================="
+echo "1.Starting docker-compose"
+echo "======================================="
+docker-compose -f docker-compose.yml up -d
+sleep 1 
+
+echo "======================================="
+echo "2.Copy code to container"
+echo "======================================="
+sh ./bin/bash/copytocontainer --all
+
+echo "======================================="
+echo "3.Change domain"
+echo "======================================="
+sh ./bin/bash/appcli domain
+
+echo "======================================="
+echo "4.Install magento 2"
+echo "======================================="
+sh ./bin/bash/fpmcli bin/magento setup:install \
+  --db-host=db \
+  --db-name=$DB_NAME \
+  --db-user=$DB_USER \
+  --db-password=$DB_PW \
+  --base-url=$BASE_URL \
+  --admin-firstname=Admin \
+  --admin-lastname=Admin \
+  --admin-email=admin@gmail.com \
+  --admin-user=$ADMIN_USER \
+  --admin-password=$ADMIN_PW \
+  --language=en_US \
+  --currency=USD \
+  --timezone=America/New_York \
+  --use-rewrites=1
+
+echo "======================================="
+echo "Setup magento succesfuly"
+echo "======================================="
