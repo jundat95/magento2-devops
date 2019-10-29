@@ -20,7 +20,7 @@ services:
   phpfpm: 
     build: 
       dockerfile: 'Dockerfile'
-      context: './bin/php/7.3-alpine/'
+      context: './bin/php/7.2-ubuntu/'
     container_name: 'phpfpm'
     volumes: *appvolumes
     ports: 
