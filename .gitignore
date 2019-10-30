@@ -1,3 +1,5 @@
 /wwww/**/**/**
 www/**/**/**
+bin/db
+bin/db/**/**
 !/magento/README.md
