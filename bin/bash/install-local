@@ -2,14 +2,7 @@
 
 # Define configuration
 
-BASE_URL="http://magento.local/"
-
-DB_NAME="magento"
-DB_USER="magento"
-DB_PW="123456"
-
-ADMIN_USER="admin"
-ADMIN_PW="admin@123"
+DOMAIN="magento.local"
 
 echo "======================================="
 echo "==========Welcome Magento Tool========="
@@ -29,7 +22,7 @@ sh ./bin/bash/copytocontainer --all
 echo "======================================="
 echo "3.Change domain"
 echo "======================================="
-sh ./bin/bash/appcli domain
+sh ./bin/bash/appcli domain $DOMAIN
 
 echo "======================================="
 echo "4.Fix permission, own"

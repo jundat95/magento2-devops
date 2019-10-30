@@ -2,7 +2,7 @@
 
 # Define configuration
 
-BASE_URL="http://magento.local/"
+BASE_URL="magento.local"
 
 DB_NAME="magento"
 DB_USER="magento"
@@ -30,7 +30,7 @@ sh ./bin/bash/copytocontainer --all
 echo "======================================="
 echo "3.Change domain"
 echo "======================================="
-sh ./bin/bash/appcli domain
+sh ./bin/bash/appcli domain $BASE_URL
 
 echo "======================================="
 echo "4.Fix permission, own"
@@ -51,7 +51,7 @@ sh ./bin/bash/fpmcli bin/magento setup:install \
   --db-name=$DB_NAME \
   --db-user=$DB_USER \
   --db-password=$DB_PW \
-  --base-url=$BASE_URL \
+  --base-url=http://$BASE_URL/ \
   --admin-firstname=Admin \
   --admin-lastname=Admin \
   --admin-email=admin@gmail.com \
