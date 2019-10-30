@@ -33,7 +33,18 @@ echo "======================================="
 sh ./bin/bash/appcli domain
 
 echo "======================================="
-echo "4.Install magento 2"
+echo "4.Fix permission, own"
+echo "======================================="
+sh ./bin/bash/fixown
+sh ./bin/bash/fixpermission
+
+echo "======================================="
+echo "5.Composer install"
+echo "======================================="
+sh ./bin/bash/fpmcli composer install
+
+echo "======================================="
+echo "6.Install magento 2"
 echo "======================================="
 sh ./bin/bash/fpmcli bin/magento setup:install \
   --db-host=db \
