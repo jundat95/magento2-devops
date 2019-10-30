@@ -1,15 +1,23 @@
 #!/bin/bash
 
-if [ "$1" != "" ]; then
-        echo "Set domain to $1"
-else 
-        echo "Set domain to http://magento.local/"
-fi
+DOMAIN="magento.local"
+MODE="dev"
+
+while getopts h:m: option 
+do 
+ case "${option}"
+ in
+ h) DOMAIN=${OPTARG};;
+ m) MODE=${OPTARG};;
+ esac
+done
+
+echo "Host default: http://"$DOMAIN 
+echo "Mode: "${MODE}
 
 # Const
-domain=${1:-magento.local}
 root="/var/www/html"
-block="/etc/nginx/sites-available/$domain"
+block="/etc/nginx/sites-available/$DOMAIN"
 
 # Create the Document Root directory
 # sudo mkdir -p $root
@@ -18,6 +26,27 @@ block="/etc/nginx/sites-available/$domain"
 # sudo chown -R $USER:$USER $root
 
 # Create the Nginx server block file:
+
+if [ "$MODE" = "prod" ]; then
+
+tee $block > /dev/null <<EOF 
+upstream fastcgi_backend {
+        server  unix:/sock/docker.sock;
+}
+
+server {
+        listen                  80 default_server;
+        listen                  [::]:80 default_server;
+        server_name             $DOMAIN;
+        set \$MAGE_ROOT         $root;
+        set \$MAGE_MODE         developer;
+        include                 $root/nginx.conf.sample;
+}
+
+EOF
+
+else
+
 tee $block > /dev/null <<EOF 
 upstream fastcgi_backend {
         server  unix:/sock/docker.sock;
@@ -25,20 +54,29 @@ upstream fastcgi_backend {
 
 server {
         listen                  80;
-        server_name             $domain www.$domain;
+        server_name             $DOMAIN www.$DOMAIN;
         set \$MAGE_ROOT         $root;
         set \$MAGE_MODE         developer;
         include                 $root/nginx.conf.sample;
 }
 
-
 EOF
+
+fi
 
 # Link to make it available
 ln -s $block /etc/nginx/sites-enabled/
 
 # add domain to hosts
-echo "127.0.0.1 $domain" >> /etc/hosts
+if [ "$DOMAIN" != "_" ]; then
+echo "127.0.0.1 $DOMAIN" >> /etc/hosts
+else
+echo "127.0.0.1 localhost" >> /etc/hosts
+fi
+
+if [ "$MODE" = "prod" ]; then
+rm -rf /etc/nginx/sites-enabled/default
+fi
 
 # update domain
 service nginx reload
