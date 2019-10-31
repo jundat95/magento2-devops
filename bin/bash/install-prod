@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Define configuration
+
+DOMAIN="_"
+MODE="prod"
+
+echo "======================================="
+echo "==========Welcome Magento Tool========="
+echo "======================================="
+
+echo "======================================="
+echo "1.Starting docker-compose"
+echo "======================================="
+docker-compose -f docker-compose.yml up -d
+sleep 1 
+
+echo "======================================="
+echo "2.Copy code to container"
+echo "======================================="
+sh ./bin/bash/copytocontainer --all
+
+echo "======================================="
+echo "3.Change domain"
+echo "======================================="
+sh ./bin/bash/appcli domain -h $DOMAIN -m $MODE
+
+echo "======================================="
+echo "4.Fix permission, own"
+echo "======================================="
+sh ./bin/bash/fixown
+sh ./bin/bash/fixpermission
+
+echo "======================================="
+echo "5.Composer install"
+echo "======================================="
+sh ./bin/bash/fpmcli composer install
+
+echo "======================================="
+echo "6.Install magento 2"
+echo "======================================="
+sh ./bin/bash/fpmcli php bin/magento setup:upgrade
+sh ./bin/bash/fpmcli php bin/magento setup:static-content:deploy -f
+sh ./bin/bash/fpmcli php bin/magento c:c
+sh ./bin/bash/fpmcli php bin/magento c:f
+
+echo "======================================="
+echo "Setup magento succesfuly"
+echo "======================================="

@@ -1,7 +1,51 @@
-# Docker for magento 2
+# DevOps for magento 2.3.x
 
-## install php-fpm
+*Docker Image to Magento 2.3.x local development in Mac, Linux and Windows*
 
-apk add php7-common php7-cli php7-fpm php7-opcache php7-gd php7-mysqli php7-curl php7-intl php7-xsl php7-mbstring php7-zip php7-bcmath php7-soap
+## Nginx + PHP-FPM 7.2.x + MySQL 5.7 + PHPMyAdmin = 💕
 
-# docker php7.3-fpm: /etc/php7/php-fpm.d/www.conf
+## How to use
+
+```bash
+
+git clone https://github.com/jundat95/magento2-devops.git
+
+Copy code Magento 2 to folder ./www
+
+Change config mysql ./bin/env/db.env
+
+```
+
+### Run docker with magento fresh and create a new db (local)
+
+```bash
+
+Go to workspace
+
+sudo sh ./bin/bash/install-default
+
+```
+
+### Run docker with project and exists db (local)
+
+```bash
+
+Copy file database to ./bin/db, file name example: dump.sql
+
+Go to workspace
+
+sudo sh ./bin/bash/install-local
+
+```
+
+### Run docker with project and exists db (server)
+
+```bash
+
+Copy file database to ./bin/db, file name example: dump.sql
+
+Go to workspace
+
+sudo sh ./bin/bash/install-prod
+
+```
