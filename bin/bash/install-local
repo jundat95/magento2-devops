@@ -22,7 +22,7 @@ sh ./bin/bash/copytocontainer --all
 echo "======================================="
 echo "3.Change domain"
 echo "======================================="
-sh ./bin/bash/appcli domain $DOMAIN
+sh ./bin/bash/appcli domain -h $DOMAIN
 
 echo "======================================="
 echo "4.Fix permission, own"
