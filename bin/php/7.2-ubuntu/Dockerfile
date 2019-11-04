@@ -22,7 +22,7 @@ COPY etc/php-fpm.conf /etc/php/7.2/fpm/
 
 COPY etc/www.conf /etc/php/7.2/fpm/pool.d/
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:1.8.6 /usr/bin/composer /usr/bin/composer
 
 RUN mkdir -p /var/www/html /sock /var/log/php/
 
