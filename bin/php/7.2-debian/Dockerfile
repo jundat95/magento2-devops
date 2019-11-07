@@ -42,6 +42,13 @@ COPY etc/www.conf /usr/local/etc/php-fpm.d/
 COPY etc/php-fpm.conf /usr/local/etc/
 # COPY conf/php.ini /usr/local/etc/php/
 
+RUN curl -sSLO https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 \
+  && chmod +x mhsendmail_linux_amd64 \
+  && mv mhsendmail_linux_amd64 /usr/local/bin/mhsendmail
+
+RUN echo "[mail function]" >> cfg/php-ini-7.2/mailhog.ini
+RUN echo "sendmail_path = '/usr/local/bin/mhsendmail --smtp-addr=\"mailhog:1025\"'" >> cfg/php-ini-7.2/mailhog.ini
+
 USER magento:magento
 
 VOLUME /var/www

@@ -1,8 +1,8 @@
 version: '3'
 services:
-  phpfpm: 
-    build: 
-      dockerfile: 'Dockerfile'
-      context: './bin/cron/'
-    container_name: 'cron'
-    tty: true
+  smtp:
+    image: mailhog/mailhog
+    user: root
+    ports:
+      - 8025:8025
+      - 1025:1025

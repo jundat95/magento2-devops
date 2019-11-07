@@ -16,7 +16,8 @@ RUN apt-get install -y php7.2-common php7.2-cli php7.2-fpm  \
     php7.2-intl php7.2-xsl php7.2-mbstring php7.2-zip   \
     php7.2-bcmath php7.2-soap \
     && apt-get install -y vim \
-    && apt-get install -y htop 
+    && apt-get install -y htop \
+    && apt-get install -y curl
 
 COPY etc/php-fpm.conf /etc/php/7.2/fpm/
 
@@ -30,6 +31,13 @@ RUN chown -R magento:magento /var/www /var/log/php/ /sock
 
 RUN echo root:admin@123 | chpasswd
 
+RUN curl -sSLO https://github.com/mailhog/mhsendmail/releases/download/v1.0.0/mhsendmail_linux_amd64 \
+  && chmod +x mhsendmail_linux_amd64 \
+  && mv mhsendmail_linux_amd64 /usr/local/bin/mhsendmail
+
+RUN echo "[mail function]" >> /etc/php/7.2/fpm/php.ini
+RUN echo "sendmail_path = '/usr/local/bin/mhsendmail --smtp-addr=\"mailhog:1025\"'" >> /etc/php/7.2/fpm/php.ini
+
 USER magento
 
 VOLUME /var/www
@@ -37,5 +45,3 @@ VOLUME /var/www
 WORKDIR /var/www/html
 
 ENTRYPOINT ["/usr/sbin/php-fpm7.2"]
-
-# CMD ["/usr/sbin/php-fpm7.2"]

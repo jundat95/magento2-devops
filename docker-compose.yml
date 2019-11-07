@@ -10,11 +10,11 @@ services:
       - sockdata:/sock
     ports: 
       - '80:80'
-      - '61208:61208'
     restart: always
     depends_on:
       - db
       - phpfpm
+      - smtp
     networks:
       - app-network
   phpfpm: 
@@ -24,7 +24,9 @@ services:
     container_name: 'phpfpm'
     volumes: *appvolumes
     ports: 
-      - 9000:9000
+      - '9000:9000'
+    depends_on:
+      - smtp
     networks: 
       - app-network
     tty: true
@@ -37,6 +39,14 @@ services:
     restart: always
     depends_on: 
       - db
+    networks:
+      - app-network
+  smtp:
+    image: mailhog/mailhog
+    user: root
+    ports:
+      - '8025:8025'
+      - '1025:1025'
     networks:
       - app-network
   db:
