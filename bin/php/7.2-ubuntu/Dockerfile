@@ -31,12 +31,12 @@ RUN chown -R magento:magento /var/www /var/log/php/ /sock
 
 RUN echo root:admin@123 | chpasswd
 
-RUN curl -sSLO https://github.com/mailhog/mhsendmail/releases/download/v1.0.0/mhsendmail_linux_amd64 \
+RUN curl -sSLO https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 \
   && chmod +x mhsendmail_linux_amd64 \
   && mv mhsendmail_linux_amd64 /usr/local/bin/mhsendmail
 
 RUN echo "[mail function]" >> /etc/php/7.2/fpm/php.ini
-RUN echo "sendmail_path = '/usr/local/bin/mhsendmail --smtp-addr=\"mailhog:1025\"'" >> /etc/php/7.2/fpm/php.ini
+RUN echo "sendmail_path = '/usr/local/bin/mhsendmail --smtp-addr=\"smtp:1025\"'" >> /etc/php/7.2/fpm/php.ini
 
 USER magento
 
