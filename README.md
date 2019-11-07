@@ -2,7 +2,8 @@
 
 *Docker Image to Magento 2.3.x local development in Mac, Linux and Windows*
 
-## Nginx + PHP-FPM 7.2.x + MySQL 5.7 + PHPMyAdmin = 💕
+## Nginx + PHP-FPM 7.2.x + MySQL 5.7 + PHPMyAdmin = <img src="magento.png" width="20" alt="magento">
+
 
 ## How to use
 

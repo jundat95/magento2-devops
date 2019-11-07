@@ -28,6 +28,17 @@ services:
     networks: 
       - app-network
     tty: true
+  cron: 
+    build: 
+      dockerfile: 'Dockerfile'
+      context: './bin/cron/'
+    container_name: 'cron'
+    volumes: *appvolumes
+    restart: always
+    depends_on: 
+      - db
+    networks:
+      - app-network
   db:
     image: mysql:5.7
     container_name: db

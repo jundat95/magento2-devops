@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker-compose exec -T cron bin/magento cron:install
