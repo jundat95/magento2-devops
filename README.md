@@ -50,3 +50,21 @@ Go to workspace
 sudo sh ./bin/bash/install-prod
 
 ```
+
+### Crontab
+
+```bash
+
+- Install crontab
+
+sudo sh ./bin/bash/cron-install
+
+- Remove crontab
+
+sudo sh ./bin/bash/cron-remove
+
+- Check status crontab
+
+sudo sh ./bin/bash/cron-status
+
+```
