@@ -35,11 +35,10 @@ upstream fastcgi_backend {
 }
 
 server {
-        listen                  80 default_server;
-        listen                  [::]:80 default_server;
-        server_name             $DOMAIN;
+        listen                  80;
+        server_name             $DOMAIN www.$DOMAIN;
         set \$MAGE_ROOT         $root;
-        set \$MAGE_MODE         developer;
+        set \$MAGE_MODE         production;
         include                 $root/nginx.conf.sample;
 }
 

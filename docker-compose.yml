@@ -6,10 +6,11 @@ services:
       context: './bin/app/'
     container_name: 'app'
     volumes: &appvolumes
+      - '~/.cache/composer:/root/.composer/cache:delegated'
       - appdata:/var/www/html:delegated
       - sockdata:/sock
     ports: 
-      - '80:80'
+      - '80'
     restart: always
     depends_on:
       - db
@@ -43,6 +44,7 @@ services:
       - app-network
   smtp:
     image: mailhog/mailhog
+    container_name: 'mailhog'
     user: root
     ports:
       - '8025:8025'
@@ -55,7 +57,7 @@ services:
     restart: always
     env_file: ./bin/env/db.env
     ports: 
-      - '3306:3306'
+      - '3306'
     volumes:
       - db_data:/var/lib/mysql
       - ./bin/db:/docker-entrypoint-initdb.d/
@@ -72,6 +74,17 @@ services:
       - PMA_HOST=db
     depends_on: 
       - db
+    networks:
+      - app-network
+  varnish:
+    build:
+      dockerfile: 'Dockerfile'
+      context: './bin/varnish'
+    container_name: 'varnish'
+    ports:
+      - '80:80'
+    depends_on: 
+      - app
     networks:
       - app-network
 networks:

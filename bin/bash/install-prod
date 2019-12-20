@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # Define configuration
+[ -z "$1" ] && echo "You must enter specify domain (ex: magento.local)" && exit
 
-DOMAIN="_"
+DOMAIN="$1"
 MODE="prod"
 
 echo "======================================="
