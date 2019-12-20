@@ -6,6 +6,15 @@
 DOMAIN="$1"
 MODE="prod"
 
+BACKEND_URL="admin"
+
+DB_NAME="magento"
+DB_USER="magento"
+DB_PW="123456"
+
+ADMIN_USER="admin"
+ADMIN_PW="admin@123"
+
 echo "======================================="
 echo "==========Welcome Magento Tool========="
 echo "======================================="
@@ -40,10 +49,27 @@ sh ./bin/bash/fpmcli composer install
 echo "======================================="
 echo "6.Install magento 2"
 echo "======================================="
-sh ./bin/bash/fpmcli php bin/magento setup:upgrade
-sh ./bin/bash/fpmcli php bin/magento setup:static-content:deploy -f
-sh ./bin/bash/fpmcli php bin/magento c:c
-sh ./bin/bash/fpmcli php bin/magento c:f
+# sh ./bin/bash/fpmcli php bin/magento setup:upgrade
+# sh ./bin/bash/fpmcli php bin/magento setup:static-content:deploy -f
+# sh ./bin/bash/fpmcli php bin/magento c:c
+# sh ./bin/bash/fpmcli php bin/magento c:f
+
+sh ./bin/bash/fpmcli bin/magento setup:install \
+  --backend-frontname=$BACKEND_URL \
+  --db-host=db \
+  --db-name=$DB_NAME \
+  --db-user=$DB_USER \
+  --db-password=$DB_PW \
+  --base-url=http://$DOMAIN/ \
+  --admin-firstname=Admin \
+  --admin-lastname=Admin \
+  --admin-email=admin@gmail.com \
+  --admin-user=$ADMIN_USER \
+  --admin-password=$ADMIN_PW \
+  --language=en_US \
+  --currency=USD \
+  --timezone=America/New_York \
+  --use-rewrites=1
 
 echo "======================================="
 echo "Setup magento succesfuly"
