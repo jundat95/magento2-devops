@@ -38,15 +38,10 @@ RUN curl -sSLO https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mh
 RUN echo "[mail function]" >> /etc/php/7.2/fpm/php.ini
 RUN echo "sendmail_path = '/usr/local/bin/mhsendmail --smtp-addr=\"smtp:1025\"'" >> /etc/php/7.2/fpm/php.ini
 
-# COPY docker-entrypoint.sh /docker-entrypoint.sh
-# RUN ["chmod", "+x", "/docker-entrypoint.sh"]
-
 USER magento
 
 VOLUME /var/www
 
 WORKDIR /var/www/html
-
-# ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["/usr/sbin/php-fpm7.2", "-F"]
