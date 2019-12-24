@@ -14,15 +14,15 @@ services:
     restart: always
     depends_on:
       - db
-      - phpfpm
+      - fpm
       - smtp
     networks:
       - app-network
-  phpfpm: 
+  fpm: 
     build: 
       dockerfile: 'Dockerfile'
       context: './bin/php/7.2-ubuntu/'
-    container_name: 'phpfpm'
+    container_name: 'fpm'
     volumes: *appvolumes
     ports: 
       - '9000:9000'
