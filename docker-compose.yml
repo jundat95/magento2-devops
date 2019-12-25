@@ -83,6 +83,9 @@ services:
     container_name: 'varnish'
     ports:
       - '80:80'
+    environment: 
+      - VIRTUAL_HOST=app1
+      - VIRTUAL_PORT=8080
     depends_on: 
       - app
     networks:
