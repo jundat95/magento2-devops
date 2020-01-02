@@ -14,4 +14,4 @@ RUN ["chmod", "+x", "/docker-entrypoint.sh"]
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
 
-CMD ["/usr/sbin/varnishd", "-F", "-f", "/etc/varnish/default.vcl"]
+CMD ["/usr/sbin/varnishd", "-F", "-f", "/etc/varnish/default.vcl", "-p", "http_resp_hdr_len=65536", "-p", "http_resp_size=98304"]
