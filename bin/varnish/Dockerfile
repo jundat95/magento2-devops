@@ -14,4 +14,4 @@ RUN ["chmod", "+x", "/docker-entrypoint.sh"]
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
 
-CMD ["varnishd", "-F", "-f", "/etc/varnish/default.vcl"]
+CMD ["/usr/sbin/varnishd", "-F", "-f", "/etc/varnish/default.vcl"]

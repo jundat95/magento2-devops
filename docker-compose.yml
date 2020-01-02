@@ -84,12 +84,13 @@ services:
     ports:
       - '80:80'
     environment: 
-      - VIRTUAL_HOST=app1
-      - VIRTUAL_PORT=8080
+      - VIRTUAL_HOST=app
+      - VIRTUAL_PORT=80
     depends_on: 
       - app
     networks:
       - app-network
+    tty: true
 networks:
   app-network:
     driver: bridge
