@@ -68,3 +68,12 @@ sh ./bin/bash/fpmcli bin/magento setup:install \
 echo "======================================="
 echo "Setup magento succesfuly"
 echo "======================================="
+
+
+chcon -R --type httpd_sys_rw_content_t <magento_root>/app/etc
+chcon -R --type httpd_sys_rw_content_t <magento_root>/var
+chcon -R --type httpd_sys_rw_content_t <magento_root>/pub/media
+chcon -R --type httpd_sys_rw_content_t <magento_root>/pub/static
+
+
+
